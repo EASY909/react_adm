@@ -1,10 +1,10 @@
-import React, { Component,Fragment  } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react';
 import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, UnlockOutlined } from '@ant-design/icons';
 
 import { validate_password } from "../../utils/validate";
-import {Login } from "src/api/account.js";
+import { Login } from "src/api/account.js";
+import Code from "component/code";  
 class LoginForm extends Component {
     constructor(props) {
         super(props);
@@ -17,9 +17,9 @@ class LoginForm extends Component {
         };
     }
     onFinish = (values) => {
-        Login(values).then(res=>{
+        Login(values).then(res => {
             console.log(res);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
         })
         // console.log('Received values of form: ', values);
@@ -80,7 +80,7 @@ class LoginForm extends Component {
                     }>
                         <Input type="password" onChange={this.inputChangePassword} prefix={<UnlockOutlined className="site-form-item-icon" />} placeholder="Password" />
                     </Form.Item>
-                    {/* <Form.Item name="code" rules={
+                    <Form.Item name="code" rules={
                         [
                             { required: true, message: '验证码不能为空' },
                             { len: 6, message: '请输入长度为6位的验证码' }
@@ -94,7 +94,7 @@ class LoginForm extends Component {
                                 <Code username={username} module={module} />
                             </Col>
                         </Row>
-                    </Form.Item> */}
+                    </Form.Item>
                     <Form.Item>
                         <Button type="primary" loading={loading} htmlType="submit" className="login-form-button" block> 登录 </Button>
                     </Form.Item>
@@ -104,8 +104,5 @@ class LoginForm extends Component {
     }
 }
 
-LoginForm.propTypes = {
-
-};
 
 export default LoginForm;

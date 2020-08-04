@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 // API
-import { GetCode } from "../../api/account";
+import { GetCode } from "src/api/account";
 // antd
 import { Button, message } from "antd";
 // 验证
-import { validate_email } from "../../utils/validate";
+import { validate_email } from "src/utils/validate";
 // 定时器
 let timer = null;
 // class 组件
 class Code extends Component {
-    constructor(props){
+    constructor(props) {
         super(props); // 初始化默认值 
         this.state = {
             username: props.username,
@@ -20,13 +20,21 @@ class Code extends Component {
         }
     }
     // this.props.username 每次都会去获取
-    componentWillReceiveProps({ username }){
-        this.setState({
-            username // 数据的变量和key是相同情况，只用一个就可以
-        })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        
+        let { username } = nextProps;
+        if (username !== prevState.username) {
+            return {
+                username // 数据的变量和key是相同情况，只用一个就可以
+            }
+        }
+        return null;
     }
+    // componentWillReceiveProps({ username }) {
+
+    // }
     /** 销毁组件 */
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearInterval(timer);
     }
     /**
@@ -34,11 +42,12 @@ class Code extends Component {
      */
     getCode = () => {
         const username = this.state.username;
-        if(!username) {
+        console.log(this.state);
+        if (!username) {
             message.warning('用户名不能为空！！', 1);
             return false;
         }
-        if(!validate_email(username)) {
+        if (!validate_email(username)) {
             message.warning('邮箱格式不正解', 1);
             return false;
         }
@@ -66,7 +75,7 @@ class Code extends Component {
      */
     countDown = () => {
         // 倒计时时间
-        let sec = 60;
+        let sec = 5;
         // 修改状态
         this.setState({
             button_loading: false,
@@ -75,7 +84,7 @@ class Code extends Component {
         })
         timer = setInterval(() => {
             sec--;
-            if(sec <= 0) {
+            if (sec <= 0) {
                 this.setState({
                     button_text: `重新获取`,
                     button_disabled: false,
@@ -89,7 +98,7 @@ class Code extends Component {
         }, 1000)
     }
 
-    render(){
+    render() {
         return <Button type="danger" disabled={this.state.button_disabled} loading={this.state.button_loading} block onClick={this.getCode}>{this.state.button_text}</Button>
     }
 }

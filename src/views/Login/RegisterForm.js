@@ -3,11 +3,11 @@ import React, { Component, Fragment } from "react";
 import { Form, Input, Button, Row, Col, message } from 'antd';
 import { UserOutlined, UnlockOutlined } from '@ant-design/icons';
 // 验证
-import { validate_pass } from "../../utils/validate";
+import { validate_pass } from "src/utils/validate";
 // API
-// import { Register } from "../../api/account";
+import { Register } from "src/api/account";
 // 组件
-// import Code from "../../components/code/index";
+import Code from "src/components/code/index";
 // 加密
 // import CryptoJs from 'crypto-js';
 class RetisterForm extends Component {
@@ -24,18 +24,18 @@ class RetisterForm extends Component {
     onFinish = (values) => {
         const requestData = {
             username: this.state.username,
-            // password: CryptoJs.MD5(this.state.password).toString(),
+            password: this.state.password,
             code: this.state.code
         }
-        // Register(requestData).then(response => {
-        //     const data = response.data;
-        //     message.success(data.message)
-        //     if (data.resCode === 0) {
-        //         this.toogleForm();
-        //     }
-        // }).catch(error => {
+        Register(requestData).then(response => {
+            const data = response.data;
+            message.success(data.message)
+            if (data.resCode === 0) {
+                this.toogleForm();
+            }
+        }).catch(error => {
 
-        // })
+        })
     };
     /** input输入处理 */
     inputChangeUsername = (e) => {
@@ -118,7 +118,7 @@ class RetisterForm extends Component {
                                     <Input onChange={this.inputChangeCode} prefix={<UnlockOutlined className="site-form-item-icon" />} placeholder="请输入验证码" />
                                 </Col>
                                 <Col span={9}>
-                                    {/* <Code username={username} module={module} /> */}
+                                    <Code username={username} module={module} />
                                 </Col>
                             </Row>
                         </Form.Item>

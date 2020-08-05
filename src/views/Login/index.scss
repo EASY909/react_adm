@@ -15,6 +15,10 @@
       line-height: 56px;
       color: #fff;
 
+      .point {
+          cursor: pointer;
+      }
+
       .column {
           margin-bottom: 0 !important;
           float: left;

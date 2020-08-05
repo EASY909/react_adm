@@ -66,7 +66,7 @@ class RetisterForm extends Component {
             <Fragment>
                 <div className="form-header">
                     <h4 className="column">注册</h4>
-                    <span onClick={this.toogleForm}>登录</span>
+                    <span className="point" onClick={this.toogleForm}>登录</span>
                 </div>
                 <div className="form-content">
                     <Form

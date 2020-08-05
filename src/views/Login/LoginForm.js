@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react';
+import {withRouter} from "react-router-dom";
 import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, UnlockOutlined } from '@ant-design/icons';
 
 import { validate_password } from "../../utils/validate";
 import { Login } from "src/api/account.js";
 import Code from "component/code";  
+
 class LoginForm extends Component {
     constructor(props) {
         super(props);
@@ -17,13 +19,31 @@ class LoginForm extends Component {
         };
     }
     onFinish = (values) => {
-        Login(values).then(res => {
-            console.log(res);
-        }).catch(error => {
-            console.log(error);
+        const requestData = {
+            username: this.state.username,
+            code: this.state.code,
+            password: this.state.password,
+        }
+        this.setState({
+            loading: true
         })
-        // console.log('Received values of form: ', values);
-        // console.log(11111);
+        Login(requestData).then(response => {  // resolves
+            this.setState({
+                loading: false
+            })
+            const data = response.data.data;
+            console.log(data);
+            // 存储token
+            // setToken(data.token);
+            // setUsername(data.username);
+            // 路由跳转
+            this.props.history.push('/index');
+        }).catch(error => {  // reject
+            this.setState({
+                loading: false
+            })
+        })
+        console.log('Received values of form: ', values);
     }
     /** input输入处理 */
     inputChangeUsername = (e) => {
@@ -54,7 +74,7 @@ class LoginForm extends Component {
             <Fragment>
                 <div className="form-header">
                     <h4 className="column">登录</h4>
-                    <span onClick={this.toggleForm}>帐号注册</span>
+                    <span  className="point" onClick={this.toggleForm}>帐号注册</span>
                 </div>
                 <Form
                     name="normal_login"
@@ -105,4 +125,4 @@ class LoginForm extends Component {
 }
 
 
-export default LoginForm;
+export default withRouter(LoginForm);

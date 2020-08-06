@@ -6,7 +6,7 @@ import { UserOutlined, UnlockOutlined } from '@ant-design/icons';
 import { validate_password } from "../../utils/validate";
 import { Login } from "src/api/account.js";
 import Code from "component/code";  
-
+import {setToken} from "src/utils/session";
 class LoginForm extends Component {
     constructor(props) {
         super(props);
@@ -32,9 +32,8 @@ class LoginForm extends Component {
                 loading: false
             })
             const data = response.data.data;
-            console.log(data);
             // 存储token
-            // setToken(data.token);
+            setToken(data.token);
             // setUsername(data.username);
             // 路由跳转
             this.props.history.push('/index');

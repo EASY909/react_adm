@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { Layout } from 'antd';
 import "./layout.scss";
-// import {
-//     MenuUnfoldOutlined,
-//     MenuFoldOutlined,
-//     UserOutlined,
-//     VideoCameraOutlined,
-//     UploadOutlined,
-// } from '@ant-design/icons';
+import Container from "component/container";
 import Aside from "./components/aside";
-import AsideHeader from "./components/header"
+import AsideHeader from "./components/header";
 const { Header, Sider, Content } = Layout;
 class Index extends Component {
     constructor(props) {
@@ -35,7 +29,9 @@ class Index extends Component {
                     <Sider width="250px">
                         <Aside />
                     </Sider>
-                    <Content className="layout-main">内容</Content>
+                    <Content className="layout-main">
+                        <Container/>
+                    </Content>
                 </Layout>
             </Layout>
         );

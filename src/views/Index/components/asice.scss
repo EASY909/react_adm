@@ -1,16 +1,39 @@
-
-.logo{
+.logo {
     width: 250px;
     height: 75px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    float: left;
     margin-left: -50px;
     background-color: #001529;
-    span{
+    transition: all 0.25 ease 0;
+
+    span {
         display: block;
         width: 177px;
         height: 47px;
         background-color: rebeccapurple;
+    }
+}
+
+.collapsed-close {
+    .logo {
+        width: 80px;
+
+        span {
+            width: 100%;
+        }
+    }
+
+    .header-wrap {
+        margin-left: 65px;
+    }
+}
+
+.header-wrap {
+    margin-left: 220px;
+    transition: all 0.25 ease 0;
+
+    .collapsed-icon {
+        font-size: 24px;
+        cursor: pointer;
     }
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {getToken,getUserName} from "./cookies";
+import { getToken, getUserName } from "./cookies";
+import { message } from "antd"
 const BASEURL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_API : process.env.REACT_APP_API;
 
 const service = axios.create({
@@ -13,7 +14,7 @@ service.interceptors.request.use(function (config) {
   console.log(config);
   config.headers['Tokey'] = getToken();
   config.headers['UserName'] = getUserName();
-  
+
   return config;
 }, function (error) {
   // 对请求错误做些什么
@@ -23,7 +24,14 @@ service.interceptors.request.use(function (config) {
 // 添加响应拦截器
 service.interceptors.response.use(function (response) {
   // 对响应数据做点什么
-  return response;
+  let data = response.data;
+  if (data.resCode !== 0) {
+    message.info(data.message);
+    return Promise.reject(response);
+  } else {
+    return response;
+  }
+
 }, function (error) {
   // 对响应错误做点什么
   return Promise.reject(error);
